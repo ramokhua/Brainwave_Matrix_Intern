@@ -2,8 +2,8 @@
 
 # Anchor Your Thoughts, Steady Your Soul
 # A holistic web platform for mood tracking, breathing exercises, and mental health support
-![MindMoor]
-?branch= [![Netlify Status](https://api.netlify.com/api/v1/badges/951ddffb-b337-41b3-b453-93fe7bb0f319/deploy-status)](https://app.netlify.com/projects/mindmoor/deploys)
+## MindMoor Deployment Status
+[![Netlify Status](https://api.netlify.com/api/v1/badges/951ddffb-b337-41b3-b453-93fe7bb0f319/deploy-status)](https://app.netlify.com/projects/mindmoor/deploys)
 
 ## 🚀 Features
 
@@ -11,7 +11,6 @@
 - **Guided Breathing Exercises** (4-7-8, Box Breathing)
 - **AI Chatbot *("Moira")*** with mental health support
 - **Wellness Reminders** (Notifications + Text-to-Speech)
-- **User Profiles** with streak tracking
 - **Responsive Design** for all devices
 
 ## 🛠️ Technologies Used
