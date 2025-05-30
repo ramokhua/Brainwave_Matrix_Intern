@@ -106,6 +106,47 @@ section {
     margin-top: 1rem;
 }
 
+button, .btn, .read-btn, .start-exercise {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid transparent;
+}
+
+button:hover, .btn:hover, .read-btn:hover, .start-exercise:hover {
+    background: white;
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+button:active, .btn:active, .read-btn:active, .start-exercise:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.read-btn {
+    margin-top: 0.5rem;
+}
+
+.start-exercise {
+    background: var(--accent);
+}
+
+.start-exercise:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
 .mood-tracker, .journal, .breathing, .chatbot {
     background: white;
     border-radius: 20px;
