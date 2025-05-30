@@ -3,14 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindMoor - CBT Books</title>
+    <title>MindMoor - Free CBT Books</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .read-btn {
+            background: #5d93a6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: bold;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .book-cover {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 1rem;
+            float: left;
+        }
+        .book-info {
+            overflow: hidden;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
             <div class="logo-container">
-                <img src="../logo-transparent.png" alt="MindMoor Logo" class="logo" width="120">
+                <img src="../logo-transparent.png" alt="MindMoor Logo" class="logo" width="150">
                 <div class="logo-text">
                     <span class="logoname">MindMoor</span>
                 </div>
@@ -21,19 +58,49 @@
         </nav>
     </header>
 
-    <section class="book-library">
-        <h1>CBT Resources</h1>
+    <section class="book-library" style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+        <h1 style="margin-bottom: 1.5rem;">Free Mental Health Books</h1>
         
-        <div class="book-card">
-            <h2>Cognitive Behavioral Therapy Made Simple</h2>
-            <p>By Seth J. Gillihan</p>
-            <button class="read-btn">Read Sample</button>
+        <div class="book-card clearfix">
+            <img src="https://www.getselfhelp.co.uk/docs/CBT%20Self%20Help%20Course.pdf" 
+                 onerror="this.src='https://via.placeholder.com/100x150/5d93a6/ffffff?text=CBT+Course'" 
+                 class="book-cover" alt="CBT Self-Help Course">
+            <div class="book-info">
+                <h2>CBT Self-Help Course</h2>
+                <p><em>By Carol Vivyan</em></p>
+                <p>Free 7-week cognitive behavioral therapy course</p>
+                <a href="https://www.getselfhelp.co.uk/docs/CBT%20Self%20Help%20Course.pdf" 
+                   target="_blank" 
+                   class="read-btn">Read Free PDF</a>
+            </div>
         </div>
 
-        <div class="book-card">
-            <h2>Feeling Good</h2>
-            <p>By David D. Burns</p>
-            <button class="read-btn">Read Sample</button>
+        <div class="book-card clearfix">
+            <img src="https://www.cci.health.wa.gov.au/~/media/CCI/Mental-Health-Professionals/Depression/Depression---Information-Sheets/Information-Sheet---01---Behavioural-Activation.pdf" 
+                 onerror="this.src='https://via.placeholder.com/100x150/5d93a6/ffffff?text=Depression+Guide'" 
+                 class="book-cover" alt="Overcoming Depression">
+            <div class="book-info">
+                <h2>Overcoming Depression</h2>
+                <p><em>By Centre for Clinical Interventions</em></p>
+                <p>Evidence-based PDF workbook</p>
+                <a href="https://www.cci.health.wa.gov.au/Resources/Looking-After-Yourself/Depression" 
+                   target="_blank" 
+                   class="read-btn">Access Workbook</a>
+            </div>
+        </div>
+
+        <div class="book-card clearfix">
+            <img src="https://www.mind.org.uk/media-a/4457/understanding-anxiety-2018.pdf" 
+                 onerror="this.src='https://via.placeholder.com/100x150/5d93a6/ffffff?text=Anxiety+Guide'" 
+                 class="book-cover" alt="Understanding Anxiety">
+            <div class="book-info">
+                <h2>Understanding Anxiety</h2>
+                <p><em>By Mind UK</em></p>
+                <p>Comprehensive free guide to anxiety management</p>
+                <a href="https://www.mind.org.uk/media-a/4457/understanding-anxiety-2018.pdf" 
+                   target="_blank" 
+                   class="read-btn">Download Guide</a>
+            </div>
         </div>
     </section>
 </body>
