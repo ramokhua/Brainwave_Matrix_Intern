@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindMoor - Therapy Tools</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .exercise {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -21,8 +34,8 @@
         </nav>
     </header>
 
-    <section class="therapy-tools">
-        <h1>Therapy Exercises</h1>
+    <section class="therapy-tools" style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+        <h1 style="margin-bottom: 1.5rem;">Therapy Exercises</h1>
         
         <div class="exercise">
             <h2>Thought Record</h2>
@@ -31,13 +44,19 @@
                 <li>Note your automatic thoughts</li>
                 <li>Challenge cognitive distortions</li>
             </ol>
-            <button class="start-exercise">Begin Exercise</button>
+            <button class="start-exercise" onclick="location.href='../index.html#journal'">Begin Exercise</button>
         </div>
 
         <div class="exercise">
-            <h2>Gratitude Journal</h2>
-            <p>List 3 things you're grateful for today</p>
-            <button class="start-exercise">Start Journaling</button>
+            <h2>5-4-3-2-1 Grounding</h2>
+            <ol>
+                <li>5 things you can see</li>
+                <li>4 things you can touch</li>
+                <li>3 things you can hear</li>
+                <li>2 things you can smell</li>
+                <li>1 thing you can taste</li>
+            </ol>
+            <button class="start-exercise" onclick="alert('Start focusing on your surroundings...')">Begin Exercise</button>
         </div>
     </section>
 </body>
