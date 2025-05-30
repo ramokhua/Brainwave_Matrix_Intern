@@ -157,7 +157,7 @@ async function getAIResponse(userMessage) {
             body: JSON.stringify({ inputs: userMessage })
         });
         const data = await response.json();
-        // Hugging Face may return an array or an object
+        
         if (data.generated_text) {
             return data.generated_text;
         } else if (Array.isArray(data) && data[0]?.generated_text) {
@@ -172,17 +172,17 @@ async function getAIResponse(userMessage) {
     }
 }
 
-// Replace your existing sendMessage function with this:
+
 function sendMessage() {
     const input = document.getElementById('chatbot-input');
     const message = input.value.trim();
     if (!message) return;
     addMessage('user', message);
     input.value = '';
-    // Show a loading message while waiting for the AI
+    
     addMessage('bot', "Thinking...");
+    
     getAIResponse(message).then(response => {
-        // Remove the temporary "Thinking..." message
         const container = document.getElementById('chatbot-messages');
         const lastMessage = container.querySelector('.message.bot:last-child');
         if (lastMessage && lastMessage.textContent === "Thinking...") {
