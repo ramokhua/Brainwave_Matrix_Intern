@@ -149,39 +149,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Chatbot
-    const chatbotResponses = {
-        "hello": "Hi! How are you feeling today?",
-        "sad": "I'm here for you. Would you like to try journaling?",
-        "anxious": "Let's do a breathing exercise together.",
-        "default": "I'm listening. Tell me more."
-    };
-
-    document.getElementById('send-message').addEventListener('click', sendMessage);
-    document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') sendMessage();
-    });
-
-    function sendMessage() {
-        const input = document.getElementById('chatbot-input');
-        const message = input.value.trim();
-        if (!message) return;
-        
-        addMessage('user', message);
-        input.value = '';
-        
-        setTimeout(() => {
-            const response = chatbotResponses[message.toLowerCase()] || chatbotResponses["default"];
-            addMessage('bot', response);
-        }, 500);
+async function getAIResponse(userMessage) {
+    try {
+        const response = await fetch('https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ inputs: userMessage })
+        });
+        const data = await response.json();
+        // Hugging Face may return an array or an object
+        if (data.generated_text) {
+            return data.generated_text;
+        } else if (Array.isArray(data) && data[0]?.generated_text) {
+            return data[0].generated_text;
+        } else if (data.error) {
+            return "Sorry, the AI service is temporarily unavailable.";
+        } else {
+            return "Sorry, I couldn't get a response right now.";
+        }
+    } catch (error) {
+        return "Sorry, there was a problem connecting to the AI service.";
     }
+}
 
-    function addMessage(sender, text) {
+// Replace your existing sendMessage function with this:
+function sendMessage() {
+    const input = document.getElementById('chatbot-input');
+    const message = input.value.trim();
+    if (!message) return;
+    addMessage('user', message);
+    input.value = '';
+    // Show a loading message while waiting for the AI
+    addMessage('bot', "Thinking...");
+    getAIResponse(message).then(response => {
+        // Remove the temporary "Thinking..." message
         const container = document.getElementById('chatbot-messages');
-        const div = document.createElement('div');
-        div.className = `message ${sender}`;
-        div.textContent = text;
-        container.appendChild(div);
-        container.scrollTop = container.scrollHeight;
+        const lastMessage = container.querySelector('.message.bot:last-child');
+        if (lastMessage && lastMessage.textContent === "Thinking...") {
+            container.removeChild(lastMessage);
+        }
+        addMessage('bot', response);
+    });
     }
 
     // Initialize
