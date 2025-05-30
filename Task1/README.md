@@ -1,16 +1,14 @@
-```markdown
-# MindMoor - Mental Wellness Platform
+## MindMoor - Mental Wellness Platform
 
-**Anchor Your Thoughts, Steady Your Soul**  
-*A holistic web platform for mood tracking, breathing exercises, and mental health support.*
-
+# Anchor Your Thoughts, Steady Your Soul
+# A holistic web platform for mood tracking, breathing exercises, and mental health support
 ![MindMoor Screenshot](https://via.placeholder.com/800x400/5d93a6/ffffff?text=MindMoor+Demo)
 
 ## 🚀 Features
 
 - **Mood Tracker** with analytics dashboard (Chart.js)
 - **Guided Breathing Exercises** (4-7-8, Box Breathing)
-- **AI Chatbot** ("Moira") with mental health support
+- **AI Chatbot *("Moira")*** with mental health support
 - **Wellness Reminders** (Notifications + Text-to-Speech)
 - **User Profiles** with streak tracking
 - **Responsive Design** for all devices
