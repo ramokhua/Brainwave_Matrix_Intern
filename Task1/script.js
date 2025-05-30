@@ -149,48 +149,144 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Chatbot
-async function getAIResponse(userMessage) {
-    try {
-        const response = await fetch('https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ inputs: userMessage })
-        });
-        const data = await response.json();
+     const chatbot = {
+    config: {
+        apiUrl: 'https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill',
+        apiKey: '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',
+        minResponseTime: 800,
+        maxResponseTime: 3000
+    },
+
+    init: function() {
+        const sendBtn = document.getElementById('send-message');
+        const inputField = document.getElementById('chatbot-input');
         
-        if (data.generated_text) {
-            return data.generated_text;
-        } else if (Array.isArray(data) && data[0]?.generated_text) {
-            return data[0].generated_text;
-        } else if (data.error) {
-            return "Sorry, the AI service is temporarily unavailable.";
-        } else {
-            return "Sorry, I couldn't get a response right now.";
+        sendBtn.addEventListener('click', this.sendMessage.bind(this));
+        inputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.sendMessage();
+        });
+
+        setTimeout(() => {
+            this.addMessage('bot', "Hello! I'm Moira. How can I support you today?");
+        }, 1000);
+    },
+
+    sendMessage: function() {
+        const input = document.getElementById('chatbot-input');
+        const message = input.value.trim();
+        
+        if (!message) return;
+        
+        this.addMessage('user', message);
+        input.value = '';
+        
+        const typingIndicator = this.showTypingIndicator();
+        
+        this.getAIResponse(message)
+            .then(response => {
+                this.hideTypingIndicator(typingIndicator);
+                this.addMessage('bot', response);
+            })
+            .catch(error => {
+                this.hideTypingIndicator(typingIndicator);
+                this.addMessage('bot', "I'm having trouble connecting. Let's try again later.");
+                console.error("Chatbot error:", error);
+            });
+    },
+
+    getAIResponse: async function(userMessage) {
+        try {
+            const response = await fetch(this.config.apiUrl, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.config.apiKey}`
+                },
+                body: JSON.stringify({
+                    inputs: userMessage,
+                    parameters: {
+                        return_full_text: false,
+                        max_length: 150,
+                        temperature: 0.9,
+                        repetition_penalty: 1.2
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return this.processResponse(data);
+        } catch (error) {
+            console.error("API Error:", error);
+            return this.getFallbackResponse();
         }
-    } catch (error) {
-        return "Sorry, there was a problem connecting to the AI service.";
-    }
-}
+    },
 
+    processResponse: function(data) {
+        if (data.error) {
+            console.error("API Error:", data.error);
+            return "I'm having some technical difficulties. Could you rephrase that?";
+        }
+        
+        const responseText = data.generated_text || 
+                            (Array.isArray(data) && data[0]?.generated_text) || 
+                            "I'm not sure how to respond to that.";
+        
+        return this.cleanResponse(responseText);
+    },
 
-function sendMessage() {
-    const input = document.getElementById('chatbot-input');
-    const message = input.value.trim();
-    if (!message) return;
-    addMessage('user', message);
-    input.value = '';
-    
-    addMessage('bot', "Thinking...");
-    
-    getAIResponse(message).then(response => {
+    cleanResponse: function(text) {
+        let cleaned = text.replace(/^[^a-zA-Z0-9]+/, '').trim();
+        
+        if (!/[.!?]$/.test(cleaned)) {
+            cleaned += '.';
+        }
+        
+        return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+    },
+
+    getFallbackResponse: function() {
+        const fallbacks = [
+            "I'm still learning. Could you tell me more?",
+            "Let me think about that... maybe try a breathing exercise while you wait?",
+            "I want to understand better. Could you rephrase that?",
+            "Sometimes writing helps. Would you like to try journaling instead?"
+        ];
+        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    },
+
+    showTypingIndicator: function() {
         const container = document.getElementById('chatbot-messages');
-        const lastMessage = container.querySelector('.message.bot:last-child');
-        if (lastMessage && lastMessage.textContent === "Thinking...") {
-            container.removeChild(lastMessage);
+        const indicator = document.createElement('div');
+        indicator.className = 'message bot typing-indicator';
+        indicator.innerHTML = '<span></span><span></span><span></span>';
+        container.appendChild(indicator);
+        container.scrollTop = container.scrollHeight;
+        return indicator;
+    },
+
+    hideTypingIndicator: function(indicator) {
+        if (indicator && indicator.parentNode) {
+            indicator.parentNode.removeChild(indicator);
         }
-        addMessage('bot', response);
-    });
+    },
+
+    addMessage: function(sender, text) {
+        const container = document.getElementById('chatbot-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
+        messageDiv.textContent = text;
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
     }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    chatbot.init();
+});
 
     // Initialize
     if (moodHistory.length > 0) updateMoodChart();
