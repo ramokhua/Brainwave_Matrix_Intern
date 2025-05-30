@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindMoor - Therapy Tools</title>
+    <title>MindMoor - Free Therapy Tools</title>
     <link rel="stylesheet" href="../style.css">
     <style>
         .exercise {
@@ -13,9 +13,18 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        ol {
+        ol, ul {
             padding-left: 1.5rem;
             margin: 1rem 0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .download-link {
+            display: block;
+            margin-top: 1rem;
+            color: #5d93a6;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -23,7 +32,7 @@
     <header>
         <nav>
             <div class="logo-container">
-                <img src="../logo-transparent.png" alt="MindMoor Logo" class="logo" width="120">
+                <img src="../logo-transparent.png" alt="MindMoor Logo" class="logo" width="150">
                 <div class="logo-text">
                     <span class="logoname">MindMoor</span>
                 </div>
@@ -35,28 +44,52 @@
     </header>
 
     <section class="therapy-tools" style="padding: 2rem; max-width: 800px; margin: 0 auto;">
-        <h1 style="margin-bottom: 1.5rem;">Therapy Exercises</h1>
+        <h1 style="margin-bottom: 1.5rem;">Free Therapy Exercises</h1>
         
         <div class="exercise">
-            <h2>Thought Record</h2>
+            <h2>Thought Record Worksheet</h2>
+            <p>Challenge negative thinking patterns:</p>
             <ol>
-                <li>Identify the situation</li>
-                <li>Note your automatic thoughts</li>
-                <li>Challenge cognitive distortions</li>
+                <li>Situation (what happened?)</li>
+                <li>Automatic thoughts</li>
+                <li>Evidence for/against</li>
+                <li>Alternative perspective</li>
             </ol>
-            <button class="start-exercise" onclick="location.href='../index.html#journal'">Begin Exercise</button>
+            <button class="start-exercise" 
+                    onclick="window.open('../index.html#journal', '_blank')">
+                Start Journaling
+            </button>
+            <a href="https://www.psychologytools.com/resource/cbt-thought-record/" 
+               target="_blank" 
+               class="download-link">
+                Download Printable Worksheet
+            </a>
         </div>
 
         <div class="exercise">
-            <h2>5-4-3-2-1 Grounding</h2>
-            <ol>
-                <li>5 things you can see</li>
-                <li>4 things you can touch</li>
-                <li>3 things you can hear</li>
-                <li>2 things you can smell</li>
-                <li>1 thing you can taste</li>
-            </ol>
-            <button class="start-exercise" onclick="alert('Start focusing on your surroundings...')">Begin Exercise</button>
+            <h2>5-4-3-2-1 Grounding Technique</h2>
+            <p>For anxiety and panic attacks:</p>
+            <ul>
+                <li><strong>5</strong> things you can see</li>
+                <li><strong>4</strong> things you can touch</li>
+                <li><strong>3</strong> things you can hear</li>
+                <li><strong>2</strong> things you can smell</li>
+                <li><strong>1</strong> thing you can taste</li>
+            </ul>
+            <button class="start-exercise" 
+                    onclick="alert('Focus on your current surroundings... Name 5 things you can see right now.')">
+                Begin Exercise
+            </button>
+        </div>
+
+        <div class="exercise">
+            <h2>Mindfulness Meditation</h2>
+            <p>Free guided audio resources:</p>
+            <a href="https://www.mindful.org/free-mindfulness-resources/" 
+               target="_blank" 
+               class="read-btn">
+                Access Free Meditations
+            </a>
         </div>
     </section>
 </body>
