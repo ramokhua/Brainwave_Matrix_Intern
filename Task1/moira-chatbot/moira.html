@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMoor - Chat with Moira</title>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+    <div class="chatbot-container">
+        <a href="../index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to App
+        </a>
+        
+        <div class="header">
+            <img src="logo-transparent.png" alt="MindMoor Logo" class="logo">
+            <div class="header-text">
+                <h1>Moira</h1>
+                <p>Your mental health companion</p>
+            </div>
+        </div>
+        
+        <div id="chatbot-messages"></div>
+        
+        <div class="chatbot-input-container">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
