@@ -1,4 +1,3 @@
-/* style.css */
 :root {
     --primary: #5d93a6;
     --secondary: #a6dcef;
@@ -6,9 +5,8 @@
     --light: #f0f8ff;
     --accent: #ff9e7d;
     --text: #333;
-    --text-light: #777;
 }
-   
+
 * {
     margin: 0;
     padding: 0;
@@ -20,13 +18,12 @@ body {
     background-color: var(--light);
     color: var(--text);
     line-height: 1.6;
-    width: 100%;
 }
 
 header {
     background: linear-gradient(135deg, var(--primary), var(--dark));
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -35,227 +32,147 @@ header {
 nav {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: bold;
+.logo-container {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
+
+.logo {
+    height: 50px;
+}
+
+.logoname {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
 .slogan {
-font-style: italic;
-opacity: 0.8;
+    font-style: italic;
+    opacity: 0.8;
+    font-size: 0.9rem;
 }
+
 nav ul {
-display: flex;
-list-style: none;
-gap: 2rem;
+    display: flex;
+    list-style: none;
+    gap: 2rem;
 }
+
 nav ul li a {
-color: white;
-text-decoration: none;
-font-weight: 500;
-transition: opacity 0.3s;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
 }
-nav ul li a:hover {
-opacity: 0.8;
-}
+
 section {
-padding: 3rem 2rem;
-max-width: 1200px;
-margin: 0 auto;
-}
-.hero {
-background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-url('https://source.unsplash.com/random/1600x900/?calm') no-repeat center/cover;
-height: 70vh;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-color: white;
-border-radius: 0 0 20px 20px;
-margin-bottom: 2rem;
-margin-top: 10px;
-}
-.hero-content h1 {
-font-size: 3rem;
-margin-bottom: 1rem;
-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-.hero-content p {
-font-size: 1.2rem;
-margin-bottom: 2rem;
-max-width: 600px;
-margin-left: auto;
-margin-right: auto;
-}
-.cta {
-background-color: var(--accent);
-color: white;
-border: none;
-padding: 0.8rem 2rem;
-font-size: 1rem;
-border-radius: 50px;
-cursor: pointer;
-transition: transform 0.2s, box-shadow 0.2s;
-font-weight: bold;
-}
-.cta:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-.mood-tracker {
-background-color: white;
-border-radius: 20px;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-margin-bottom: 2rem;
-padding: 2rem;
-}
-.moods {
-display: flex;
-gap: 1rem;
-justify-content: center;
-margin: 2rem 0;
-flex-wrap: wrap;
-}
-.moods button {
-background-color: var(--secondary);
-border: none;
-padding: 1rem 1.5rem;
-border-radius: 10px;
-font-size: 1rem;
-cursor: pointer;
-transition: transform 0.2s;
-display: flex;
-align-items: center;
-gap: 0.5rem;
-}
-.moods button:hover {
-transform: scale(1.05);
-}
-#mood-result {
-margin: 1.5rem 0;
-padding: 1rem;
-background-color: var(--light);
-border-radius: 10px;
-min-height: 60px;
-}
-#mood-chart {
-margin-top: 2rem;
-max-height: 300px;
-}
-.breathing {
-background-color: white;
-border-radius: 20px;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-margin-bottom: 2rem;
-padding: 2rem;
-text-align: center;
-}
-.breathing-container {
-max-width: 400px;
-margin: 0 auto;
-}
-#breathing-circle {
-width: 200px;
-height: 200px;
-border-radius: 50%;
-background-color: var(--primary);
-margin: 2rem auto;
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-font-size: 1.5rem;
-cursor: pointer;
-transition: transform 0.5s, background-color 0.5s;
-}
-.breathing-controls {
-display: flex;
-gap: 1rem;
-justify-content: center;
-margin-top: 1rem;
-}
-.breathing-controls button {
-padding: 0.5rem 1rem;
-border: none;
-border-radius: 5px;
-background-color: var(--primary);
-color: white;
-cursor: pointer;
-}
-.breathing-controls select {
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-.reminders {
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
     padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.reminder-form {
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('https://source.unsplash.com/random/1600x900/?calm');
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 2rem;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.cta {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.mood-tracker, .journal, .breathing, .chatbot {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.moods {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    justify-content: center;
+    margin: 2rem 0;
     flex-wrap: wrap;
 }
 
-.reminder-form input, .reminder-form select {
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    flex: 1;
-    min-width: 200px;
-}
-
-.reminder-form button {
-    padding: 0.8rem 1.5rem;
-    background-color: var(--primary);
-    color: white;
+.moods button {
+    background: var(--secondary);
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-#reminder-list {
-    list-style: none;
-}
-    
-#reminder-list li {
-    background-color: var(--light);
     padding: 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#reminder-list li button {
-    background: none;
-    border: none;
-    color: var(--text-light);
+    border-radius: 10px;
+    font-size: 1rem;
     cursor: pointer;
-    font-size: 1.2rem;
+    transition: transform 0.2s;
 }
 
-.chatbot {
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-    padding: 2rem;
+.moods button:hover {
+    transform: scale(1.05);
+}
+
+#journal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#journal-text {
+    min-height: 150px;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.breathing-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#breathing-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--primary);
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.breathing-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .chatbot-container {
@@ -266,11 +183,11 @@ cursor: pointer;
 }
 
 #chatbot-messages {
-    height: 300px;
+    height: 200px;
     overflow-y: auto;
     margin-bottom: 1rem;
     padding: 1rem;
-    background-color: #f9f9f9;
+    background: #f9f9f9;
     border-radius: 8px;
 }
 
@@ -279,190 +196,20 @@ cursor: pointer;
     gap: 0.5rem;
 }
 
-.chatbot-input input {
+#chatbot-input {
     flex: 1;
     padding: 0.8rem;
+    border-radius: 8px;
     border: 1px solid #ddd;
-    border-radius: 8px;
 }
 
-.chatbot-input button {
-    padding: 0.8rem 1rem;
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.profile {
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-    padding: 2rem;
-}
-
-.profile-card {
-    display: flex;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    align-items: center;
-}
-
-.avatar-container {
-    position: relative;
-}
-
-#profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--primary);
-}
-
-#profile-upload {
-    display: none;
-}
-
-.avatar-container label {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: var(--accent);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.profile-info {
-    flex: 1;
-}
-
-#profile-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    border: none;
-    border-bottom: 2px solid var(--primary);
-    padding: 0.2rem 0;
-    width: 100%;
-    max-width: 300px;
-}
-
-.streak {
-    display: inline-block;
-    background-color: var(--light);
-    padding: 0.3rem 1rem;
-    border-radius: 50px;
-    margin-bottom: 1rem;
-}
-
-.stats {
-    display: flex;
-    gap: 2rem;
-}
-
-.stat {
-    text-align: center;
-}
-
-.stat span {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary);
-    display: block;
-}
-
-.stat small {
-    color: var(--text-light);
-    font-size: 0.8rem;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.logo-img {
-    height: 40px;
-    width: 40px;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-.logo-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-}
-
-.slogan {
-    font-size: 0.7rem;
-    opacity: 0.8;
-    color: white;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
-
-nav ul {
-    display: flex;
-    gap: 2rem;
-}
-
-/* Breathing animations */
-@keyframes breatheIn {
-    0% { transform: scale(1); background-color: var(--primary); }
-    100% { transform: scale(1.2); background-color: var(--accent); }
-}
-
-@keyframes breatheHold {
-    0%, 100% { transform: scale(1.2); background-color: var(--accent); }
-}
-
-@keyframes breatheOut {
-    0% { transform: scale(1.2); background-color: var(--accent); }
-    100% { transform: scale(1); background-color: var(--primary); }
-}
-
-/* Responsive */
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
         gap: 1rem;
     }
-
+    
     .hero-content h1 {
         font-size: 2rem;
-    }
-
-    .profile-card {
-        flex-direction: column;
-        text-align: center;
-    }   
-
-    #profile-name {
-        max-width: 100%;
-    }
-
-    .stats {
-        justify-content: center;
     }
 }
