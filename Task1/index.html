@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MindMoor</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo-container">
+                    <img src="logo-transparent.png" alt="MindMoor Logo" class="logo" width="150">
+                    <div class="logo-text">
+                        <span class="logoname">MindMoor</span>
+                        <span class="slogan">Anchor Your Thoughts, 
+                            Steady Your Soul</span>
+                        </span>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#mood-tracker">Mood</a></li>
+                            <li><a href="#therapy">Therapy</a></li>
+                            <li><a href="#journal">Journal</a></li>
+                            <li><a href="#profile">Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Your Safe Harbor for Mental Wellness</h1>
+                <p>Track your mood, practice mindfulness, and connect with support.</p>
+                <button class="cta" id="voice-greeting">Start Your Journey</button>
+            </div>
+        </section>
+
+        <section id="mood-tracker" class="mood-tracker">
+            <h2>How are you feeling today?</h2>
+            <div class="moods">
+                <button data-mood="happy">😊 Happy</button>
+                <button data-mood="sad">😢 Sad</button>
+                <button data-mood="angry">😠 Angry</button>
+                <button data-mood="anxious">😰 Anxious</button>
+                <button data-mood="tired">😴 Tired</button>
+            </div>
+            <div id="mood-result"></div>
+            <canvas id="mood-chart"></canvas>
+        </section>
+
+        <section class="breathing">
+            <h2>Breathing Exercise</h2>
+            <div class="breathing-container">
+                <div class="circle" id="breathing-circle"></div>
+                <p id="breathing-text">Click to Start</p>
+                <div class="breathing-controls">
+                    <button id="start-breathing">Start</button>
+                    <button id="stop-breathing">Stop</button>
+                    <select id="breathing-pattern">
+                        <option value="478">4-7-8 (Calm)</option>
+                        <option value="box">Box Breathing (Focus)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section id="reminders" class="reminders">
+            <h2>Wellness Reminders</h2>
+            <div class="reminder-form">
+                <input type="text" id="reminder-text" placeholder="e.g., Drink water">
+                <input type="time" id="reminder-time">
+                <select id="reminder-type">
+                    <option value="medication">Medication</option>
+                    <option value="journal">Journal Entry</option>
+                    <option value="therapy">Therapy Session</option>
+                    <option value="self-care">Self Care</option>
+                </select>
+                <button id="add-reminder">Add</button>
+            </div>
+            <ul id="reminder-list"></ul>
+        </section>
+            
+        <section class="chatbot">
+            <h2>Talk to Moira</h2>
+            <div class="chatbot-container">
+                <div id="chatbot-messages"></div>
+                <div class="chatbot-input">
+                    <input type="text" id="chatbot-input" placeholder="How are you feeling today?">
+                    <button id="send-message">Send</button>
+                    <button id="tts-toggle">🔊 TTS</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="profile" class="profile">
+            <h2>Your Profile</h2>
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <img src="https://via.placeholder.com/150" alt="Profile" id="profile-pic">
+                    <input type="file" id="profile-upload" accept="image/*">
+                    <label for="profile-upload">📷</label>
+                </div>
+                <div class="profile-info">
+                    <input type="text" id="profile-name" value="User">
+                    <div class="streak">🔥 <span id="streak-count">0</span> day streak</div>
+                        <div class="stats">
+                            <div class="stat">
+                                <span id="mood-entries">0</span>
+                                <small>Mood Logs</small>
+                            </div>
+                            <div class="stat">
+                                <span id="journal-entries">0</span>
+                                <small>Journal Entries</small>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
