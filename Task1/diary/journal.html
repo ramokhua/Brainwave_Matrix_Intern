@@ -60,6 +60,26 @@
     margin: 0;
     line-height: 1.6;
 }
+        form-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+#save-entry, #clear-form {
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+#save-entry {
+    background-color: var(--primary);
+    color: white;
+}
+
+#clear-form {
+    background-color: #f0f0f0;
+    color: var(--dark);
+}
 
 /* Delete Button */
 .delete-entry {
@@ -98,15 +118,21 @@
     </header>
 
     <main>
-        <!-- Journal Section -->
-<section class="journal">
-    <h2>Journal</h2>
+      <section class="journal">
+    <h1>Journal</h1>
     <form id="journal-form">
-        <textarea id="journal-text" placeholder="Write your thoughts here..."></textarea>
-        <button type="submit">Save Entry</button>
+        <textarea 
+            id="journal-text" 
+            placeholder="Write your thoughts here..."
+            required
+        ></textarea>
+        <div class="form-actions">
+            <button type="submit" id="save-entry">Save Entry</button>
+            <button type="button" id="clear-form">Clear</button>
+        </div>
     </form>
     <div id="journal-entries"></div>
-</section>
+      </section>
     </main>
 
     <footer>
@@ -121,51 +147,36 @@
 const journal = {
     entries: JSON.parse(localStorage.getItem('journal')) || [],
     
-    addEntry: function(text) {
+    saveEntry: function(text) {
+        if (!text.trim()) return;
+        
         const newEntry = {
-            id: Date.now(), // Unique ID for each entry
+            id: Date.now(),
             date: new Date().toISOString(),
-            text: text,
-            mood: currentMood // Optional: link to current mood if available
+            text: text
         };
-        this.entries.unshift(newEntry); // Add new entry at beginning
+        
+        this.entries.unshift(newEntry);
         localStorage.setItem('journal', JSON.stringify(this.entries));
-        this.renderEntries();
+        this.displayEntries();
     },
     
-    renderEntries: function() {
+    displayEntries: function() {
         const container = document.getElementById('journal-entries');
         if (!container) return;
         
-        container.innerHTML = '';
-        
-        this.entries.forEach(entry => {
-            const entryDiv = document.createElement('div');
-            entryDiv.className = 'journal-entry';
-            entryDiv.dataset.id = entry.id;
-            
-            // Format date nicely
-            const entryDate = new Date(entry.date);
-            const dateString = entryDate.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            
-            entryDiv.innerHTML = `
-                <small>${dateString}</small>
+        container.innerHTML = this.entries.map(entry => `
+            <div class="journal-entry" data-id="${entry.id}">
+                <small>${new Date(entry.date).toLocaleString()}</small>
+                <button class="delete-entry" data-id="${entry.id}">✕</button>
                 <p>${entry.text.replace(/\n/g, '<br>')}</p>
-                <button class="delete-entry" data-id="${entry.id}">Delete</button>
-            `;
-            container.appendChild(entryDiv);
-        });
+            </div>
+        `).join('');
         
-        // Add delete event listeners
+        // Add delete handlers
         document.querySelectorAll('.delete-entry').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
+                const id = Number(e.target.dataset.id);
                 this.deleteEntry(id);
             });
         });
@@ -174,28 +185,39 @@ const journal = {
     deleteEntry: function(id) {
         this.entries = this.entries.filter(entry => entry.id !== id);
         localStorage.setItem('journal', JSON.stringify(this.entries));
-        this.renderEntries();
+        this.displayEntries();
     }
 };
 
-// Initialize journal on page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Journal form submission
+// Initialize Journal
+function initJournal() {
     const journalForm = document.getElementById('journal-form');
-    if (journalForm) {
-        journalForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const text = document.getElementById('journal-text').value.trim();
-            if (text) {
-                journal.addEntry(text);
-                document.getElementById('journal-text').value = '';
-            }
+    const clearBtn = document.getElementById('clear-form');
+    
+    if (!journalForm) return;
+    
+    // Load existing entries
+    journal.displayEntries();
+    
+    // Form submission
+    journalForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const textarea = document.getElementById('journal-text');
+        journal.saveEntry(textarea.value);
+        textarea.value = '';
+        textarea.focus();
+    });
+    
+    // Clear form button
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            document.getElementById('journal-text').value = '';
         });
-        
-        // Load existing entries
-        journal.renderEntries();
     }
-});
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', initJournal);
     </script>
 </body>
 </html>
