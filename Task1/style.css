@@ -312,6 +312,74 @@ footer {
     margin: 0 auto;
 }
 
+.grounding-container {
+    max-width: 600px;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.grounding-step {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.grounding-step.active {
+    display: block;
+}
+
+.grounding-step h3 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.grounding-inputs {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.grounding-inputs input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.grounding-inputs input:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.grounding-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.step-counter {
+    font-weight: bold;
+    color: var(--dark);
+}
+
+.completion-message {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
     .menu-toggle {
         display: block;
