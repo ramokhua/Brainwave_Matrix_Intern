@@ -5,6 +5,8 @@ const chatbot = {
         minResponseTime: 800,
         maxResponseTime: 3000
     },
+    conversationHistory: [],
+    lastMessageTime: null,
 
     init: function() {
         if (!document.getElementById('send-message')) return;
@@ -22,11 +24,19 @@ const chatbot = {
     },
 
     sendMessage: function() {
+        // Rate limiting
+        if (this.lastMessageTime && Date.now() - this.lastMessageTime < 1000) {
+            this.addMessage('bot', "Please wait a moment before sending another message.");
+            return;
+        }
+        this.lastMessageTime = Date.now();
+
         const input = document.getElementById('chatbot-input');
         const message = input.value.trim();
         if (!message) return;
 
         this.addMessage('user', message);
+        this.conversationHistory.push({ sender: 'user', message });
         input.value = '';
         input.focus();
         
@@ -43,11 +53,14 @@ const chatbot = {
                 setTimeout(() => {
                     this.hideTypingIndicator(typingIndicator);
                     this.addMessage('bot', response);
+                    this.conversationHistory.push({ sender: 'bot', response });
                 }, delay);
             })
             .catch(error => {
                 this.hideTypingIndicator(typingIndicator);
-                this.addMessage('bot', "I'm having some trouble. Let's try again later.");
+                const fallback = this.getFallbackResponse();
+                this.addMessage('bot', fallback);
+                this.conversationHistory.push({ sender: 'bot', response: fallback });
                 console.error("Chatbot error:", error);
             });
     },
@@ -61,7 +74,17 @@ const chatbot = {
                     'Authorization': `Bearer ${this.config.apiKey}`
                 },
                 body: JSON.stringify({ 
-                    inputs: userMessage,
+                    inputs: {
+                        past_user_inputs: this.conversationHistory
+                            .filter(m => m.sender === 'user')
+                            .slice(-2)
+                            .map(m => m.message),
+                        generated_responses: this.conversationHistory
+                            .filter(m => m.sender === 'bot')
+                            .slice(-2)
+                            .map(m => m.response),
+                        text: userMessage
+                    },
                     parameters: {
                         return_full_text: false,
                         max_length: 150
@@ -70,6 +93,13 @@ const chatbot = {
             });
             
             if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                if (response.status === 503 && errorData.error === "Model is loading") {
+                    return "I'm still waking up. Please try again in a few seconds.";
+                }
+                if (response.status === 429) {
+                    return "I'm getting too many requests. Please wait a moment before trying again.";
+                }
                 throw new Error(`API error: ${response.status}`);
             }
             
@@ -84,27 +114,52 @@ const chatbot = {
     processResponse: function(data) {
         if (data.error) {
             console.error("API Error:", data.error);
-            return "I'm having some technical difficulties. Could you rephrase that?";
+            return this.getFallbackResponse();
         }
         
-        const responseText = data.generated_text || 
-                           (Array.isArray(data) && data[0]?.generated_text) || 
-                           "I'm not sure how to respond to that.";
+        // Handle different response formats
+        let responseText = "";
+        
+        // Format 1: Direct generated_text
+        if (data.generated_text) {
+            responseText = data.generated_text;
+        } 
+        // Format 2: Array response
+        else if (Array.isArray(data) && data.length > 0) {
+            responseText = data[0].generated_text || "";
+        }
+        // Format 3: Conversation history format
+        else if (data.conversation && data.conversation.generated_responses) {
+            responseText = data.conversation.generated_responses.slice(-1)[0];
+        }
+        
+        if (!responseText.trim()) {
+            return this.getFallbackResponse();
+        }
         
         return this.cleanResponse(responseText);
     },
     
     cleanResponse: function(text) {
-        // Remove any leading non-alphanumeric characters
-        let cleaned = text.replace(/^[^a-zA-Z0-9]+/, '').trim();
+        if (!text) return this.getFallbackResponse();
         
-        // Ensure the response ends with punctuation
+        // Remove any bot-specific prefixes
+        let cleaned = text.replace(/^\s*(bot|ai|moira):?\s*/i, '').trim();
+        
+        // Remove special tokens or weird characters
+        cleaned = cleaned.replace(/<\/?s>|\[|\]|\(|\)/g, '');
+        
+        // Ensure proper punctuation
         if (!/[.!?]$/.test(cleaned)) {
             cleaned += '.';
         }
         
-        // Capitalize first letter
-        return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+        // Capitalize first letter and fix spacing
+        cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+        cleaned = cleaned.replace(/\s+([.,!?])/g, '$1'); // Remove space before punctuation
+        cleaned = cleaned.replace(/([.,!?])([a-zA-Z])/g, '$1 $2'); // Add space after punctuation
+        
+        return cleaned;
     },
     
     getFallbackResponse: function() {
@@ -121,7 +176,14 @@ const chatbot = {
         const container = document.getElementById('chatbot-messages');
         const indicator = document.createElement('div');
         indicator.className = 'message bot typing-indicator';
-        indicator.innerHTML = '<span></span><span></span><span></span>';
+        indicator.innerHTML = `
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+        `;
         container.appendChild(indicator);
         container.scrollTop = container.scrollHeight;
         return indicator;
@@ -137,7 +199,13 @@ const chatbot = {
         const container = document.getElementById('chatbot-messages');
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}`;
-        messageDiv.textContent = text;
+        
+        const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        messageDiv.innerHTML = `
+            <div class="message-content">${text}</div>
+            <div class="message-time">${timestamp}</div>
+        `;
+        
         container.appendChild(messageDiv);
         container.scrollTop = container.scrollHeight;
     }
