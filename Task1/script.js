@@ -121,45 +121,82 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Breathing Exercise
+    // Breathing Exercise Functionality
+const startBreathingBtn = document.getElementById('start-breathing');
+if (startBreathingBtn) {
     const breathingCircle = document.getElementById('breathing-circle');
     const breathingText = document.getElementById('breathing-text');
     let isBreathing = false;
     let breathInterval;
 
-    document.getElementById('start-breathing').addEventListener('click', function() {
-        if (isBreathing) return;
+    startBreathingBtn.addEventListener('click', function() {
+        if (isBreathing) {
+            clearInterval(breathInterval);
+            isBreathing = false;
+            this.textContent = 'Start';
+            breathingText.textContent = 'Ready';
+            breathingCircle.style.transform = 'scale(1)';
+            breathingCircle.style.backgroundColor = 'var(--primary)';
+            breathingCircle.classList.remove('breathing-in', 'holding', 'breathing-out');
+            breathingCircle.classList.remove('breathing-active');
+            return;
+        }
         
         isBreathing = true;
+        this.textContent = 'Stop';
         const pattern = document.getElementById('breathing-pattern').value;
-        let inhale = 4, hold = 4, exhale = 4;
         
-        if (pattern === '478') {
-            inhale = 4; hold = 7; exhale = 8;
+        let inhale = 4, hold = 4, exhale = 4, pause = 0;
+        
+        switch(pattern) {
+            case '478':
+                inhale = 4; hold = 7; exhale = 8; break;
+            case 'box':
+                inhale = 4; hold = 4; exhale = 4; pause = 4; break;
+            case 'relax':
+                inhale = 4; hold = 7; exhale = 8; break;
         }
         
         let cycle = 0;
+        breathingCircle.classList.add('breathing-active');
+        
         breathInterval = setInterval(() => {
-            if (cycle % 3 === 0) {
+            const phase = cycle % (pause ? 4 : 3);
+            
+            breathingCircle.classList.remove('breathing-in', 'holding', 'breathing-out', 'pausing');
+            
+            if (phase === 0) {
                 // Inhale
-                breathingText.textContent = 'Breathe In...';
-                breathingCircle.style.transform = 'scale(1.2)';
-                breathingCircle.style.backgroundColor = '#ff9e7d';
-            } else if (cycle % 3 === 1) {
+                breathingText.textContent = `Breathe In (${inhale}s)`;
+                breathingCircle.style.backgroundColor = 'var(--accent)';
+                breathingCircle.style.transform = 'scale(1.1)';
+                breathingCircle.classList.add('breathing-in');
+            } 
+            else if (phase === 1) {
                 // Hold
-                breathingText.textContent = 'Hold...';
-            } else {
+                breathingText.textContent = `Hold (${hold}s)`;
+                breathingCircle.classList.add('holding');
+            } 
+            else if (phase === 2) {
                 // Exhale
-                breathingText.textContent = 'Breathe Out...';
+                breathingText.textContent = `Breathe Out (${exhale}s)`;
+                breathingCircle.style.backgroundColor = 'var(--primary)';
                 breathingCircle.style.transform = 'scale(1)';
-                breathingCircle.style.backgroundColor = '#5d93a6';
+                breathingCircle.classList.add('breathing-out');
             }
+            else if (phase === 3) {
+                // Pause (for box breathing)
+                breathingText.textContent = `Pause (${pause}s)`;
+                breathingCircle.classList.add('pausing');
+            }
+            
             cycle++;
-        }, (inhale + hold + exhale) * 1000);
+        }, (inhale + hold + exhale + pause) * 1000 / (pause ? 4 : 3));
     });
+}
 
     // Chatbot
-     const chatbot = {
+    const chatbot = {
     config: {
         apiUrl: 'https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill',
         apiKey: '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',
