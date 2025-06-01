@@ -7,6 +7,7 @@ const chatbot = {
     },
     conversationHistory: [],
     lastMessageTime: null,
+    lastUserMessage: '',
 
     init: function() {
         if (!document.getElementById('send-message')) return;
@@ -36,6 +37,7 @@ const chatbot = {
         if (!message) return;
 
         this.addMessage('user', message);
+        this.lastUserMessage = message;
         this.conversationHistory.push({ sender: 'user', message });
         input.value = '';
         input.focus();
@@ -47,6 +49,17 @@ const chatbot = {
             this.config.minResponseTime,
             Math.random() * this.config.maxResponseTime
         );
+        
+        // Check for keywords first
+        const keywordResponse = this.getKeywordResponse(message);
+        if (keywordResponse) {
+            setTimeout(() => {
+                this.hideTypingIndicator(typingIndicator);
+                this.addMessage('bot', keywordResponse);
+                this.conversationHistory.push({ sender: 'bot', response: keywordResponse });
+            }, delay);
+            return;
+        }
         
         this.getAIResponse(message)
             .then(response => {
@@ -63,6 +76,83 @@ const chatbot = {
                 this.conversationHistory.push({ sender: 'bot', response: fallback });
                 console.error("Chatbot error:", error);
             });
+    },
+
+    getKeywordResponse: function(message) {
+        const lowerMsg = message.toLowerCase();
+        
+        // Crisis keywords
+        if (/(suicidal|self.?harm|kill myself|end it all)/i.test(lowerMsg)) {
+            return "I'm really concerned about what you're sharing. Please contact your local crisis hotline immediately. You're not alone, and help is available.";
+        }
+        
+        // Common mental health topics
+        if (/(stress|overwhelm|overwhelmed)/i.test(lowerMsg)) {
+            return this.getStressResponse();
+        }
+        
+        if (/(anxious|anxiety|nervous|worried)/i.test(lowerMsg)) {
+            return this.getAnxietyResponse();
+        }
+        
+        if (/(interview|job|work|employment)/i.test(lowerMsg)) {
+            return this.getInterviewResponse();
+        }
+        
+        if (/(lonely|alone|isolated)/i.test(lowerMsg)) {
+            return this.getLonelinessResponse();
+        }
+        
+        if (/(depress|sad|miserable|down)/i.test(lowerMsg)) {
+            return this.getDepressionResponse();
+        }
+        
+        return null;
+    },
+
+    getStressResponse: function() {
+        const options = [
+            "Stress can feel overwhelming. Would you like a grounding exercise or to talk through what's bothering you?",
+            "When I'm stressed, I remember to pause and breathe. Let's try together: breathe in for 4, hold for 4, out for 6.",
+            "That sounds really difficult. Stress often comes from feeling overloaded. Would it help to prioritize one small thing to address first?"
+        ];
+        return options[Math.floor(Math.random() * options.length)];
+    },
+
+    getAnxietyResponse: function() {
+        const options = [
+            "Anxiety can feel paralyzing. Would you like to try the 5-4-3-2-1 grounding technique? Name 5 things you see, 4 you can touch...",
+            "I hear how anxious you're feeling. Sometimes writing down worries can help contain them. Would you like to try that?",
+            "Anxiety often makes us fear the future. Can you tell me one small thing that might help right now?"
+        ];
+        return options[Math.floor(Math.random() * options.length)];
+    },
+
+    getInterviewResponse: function() {
+        const options = [
+            "Job interviews can definitely be nerve-wracking. Many people find it helpful to practice answers out loud. Would you like to do a mock interview?",
+            "Interview anxiety is completely normal. Remember, it's a conversation, not a test. Would you like some common interview questions to practice?",
+            "Preparing for interviews can reduce anxiety. Would it help to discuss: 1) Your strengths 2) Why you want this job 3) Questions you have for them?"
+        ];
+        return options[Math.floor(Math.random() * options.length)];
+    },
+
+    getLonelinessResponse: function() {
+        const options = [
+            "Loneliness can be really painful. Would you like to explore ways to connect with others, or strategies to feel comfort when alone?",
+            "I hear how lonely you're feeling. Sometimes joining an online community or class can help. Would you like some suggestions?",
+            "Feeling alone is so hard. Would it help to think of one person you could reach out to today, even just for a quick message?"
+        ];
+        return options[Math.floor(Math.random() * options.length)];
+    },
+
+    getDepressionResponse: function() {
+        const options = [
+            "I'm sorry you're feeling this way. Depression can make everything feel heavy. Would you like to talk about what might help you today?",
+            "That sounds really hard. When depression feels overwhelming, sometimes just getting through the day is enough. Be gentle with yourself.",
+            "I hear how much you're struggling. Would it help to think of one small thing that usually brings you comfort, even just a little?"
+        ];
+        return options[Math.floor(Math.random() * options.length)];
     },
 
     getAIResponse: async function(userMessage) {
@@ -120,15 +210,12 @@ const chatbot = {
         // Handle different response formats
         let responseText = "";
         
-        // Format 1: Direct generated_text
         if (data.generated_text) {
             responseText = data.generated_text;
         } 
-        // Format 2: Array response
         else if (Array.isArray(data) && data.length > 0) {
             responseText = data[0].generated_text || "";
         }
-        // Format 3: Conversation history format
         else if (data.conversation && data.conversation.generated_responses) {
             responseText = data.conversation.generated_responses.slice(-1)[0];
         }
@@ -156,18 +243,18 @@ const chatbot = {
         
         // Capitalize first letter and fix spacing
         cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
-        cleaned = cleaned.replace(/\s+([.,!?])/g, '$1'); // Remove space before punctuation
-        cleaned = cleaned.replace(/([.,!?])([a-zA-Z])/g, '$1 $2'); // Add space after punctuation
+        cleaned = cleaned.replace(/\s+([.,!?])/g, '$1');
+        cleaned = cleaned.replace(/([.,!?])([a-zA-Z])/g, '$1 $2');
         
         return cleaned;
     },
     
     getFallbackResponse: function() {
         const fallbacks = [
-            "I'm still learning. Could you tell me more?",
-            "Let me think about that... maybe try a breathing exercise while you wait?",
-            "I want to understand better. Could you rephrase that?",
-            "Sometimes writing helps. Would you like to try journaling instead?"
+            "I want to understand better. Could you share more about what you're experiencing?",
+            "That sounds important. Let me think how best to help...",
+            "I hear you. Would it help if we explored this together?",
+            "Thank you for sharing that with me. What would be most helpful right now?"
         ];
         return fallbacks[Math.floor(Math.random() * fallbacks.length)];
     },
