@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMoor - Journal</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="logo-transparent.png" alt="MindMoor Logo" class="logo" width="150">
+                <div class="logo-text">
+                    <span class="logoname">MindMoor</span>
+                    <span class="slogan">Anchor Your Thoughts, Steady Your Soul</span>
+                </div>
+            </div>
+            <button class="menu-toggle">☰</button>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Back to home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="journal">
+            <h1>Journal</h1>
+            <form id="journal-form">
+                <textarea id="journal-text" placeholder="Write your thoughts..."></textarea>
+                <button type="submit">Save Entry</button>
+            </form>
+            <div id="journal-entries"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 MindMoor. All rights reserved.</p>
+            <p>For crisis support, please contact your local helpline.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
