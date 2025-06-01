@@ -195,6 +195,67 @@ if (startBreathingBtn) {
     });
 }
 
+      document.addEventListener('DOMContentLoaded', function() {
+    const groundingExercise = document.querySelector('.grounding-exercise');
+    if (!groundingExercise) return;
+
+    const steps = document.querySelectorAll('.grounding-step');
+    const prevBtn = document.getElementById('prev-step');
+    const nextBtn = document.getElementById('next-step');
+    const startOverBtn = document.getElementById('start-over');
+    const stepCounter = document.querySelector('.step-counter');
+    
+    let currentStep = 0;
+    const totalSteps = steps.length;
+
+    function updateStepDisplay() {
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', index === currentStep);
+        });
+        
+        stepCounter.textContent = `Step ${totalSteps - currentStep} of ${totalSteps}`;
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.textContent = currentStep === totalSteps - 1 ? 'Finish' : 'Next';
+        
+        if (currentStep === totalSteps - 1) {
+            startOverBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'none';
+        } else {
+            startOverBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+        }
+    }
+
+    nextBtn.addEventListener('click', function() {
+        if (currentStep < totalSteps - 1) {
+            currentStep++;
+            updateStepDisplay();
+        } else {
+            // Exercise completed
+            groundingExercise.classList.add('completed');
+        }
+    });
+
+    prevBtn.addEventListener('click', function() {
+        if (currentStep > 0) {
+            currentStep--;
+            updateStepDisplay();
+        }
+    });
+
+    startOverBtn.addEventListener('click', function() {
+        currentStep = 0;
+        groundingExercise.classList.remove('completed');
+        updateStepDisplay();
+        document.querySelectorAll('.grounding-inputs input').forEach(input => {
+            input.value = '';
+        });
+    });
+
+    // Initialize
+    updateStepDisplay();
+});
+    
     // Chatbot
     const chatbot = {
     config: {
