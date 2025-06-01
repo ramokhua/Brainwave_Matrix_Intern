@@ -1,4 +1,14 @@
+// Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    }
+
     // Mood Tracker
     const moodChartCtx = document.getElementById('mood-chart').getContext('2d');
     let moodChart;
