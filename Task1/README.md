@@ -63,9 +63,9 @@ cd mindmoor
 
 | Feature | Preview | Description |
 |---------|---------|-------------|
-| Mood Tracker | ![Mood Tracker](https://mindmoor.netlify.app/mood/mood-tracker) | Visualize emotional patterns over time |
-| Breathing Exercises | ![Breathing](https://mindmoor.netlify.app/breathing/breathing) | Animated guides for stress relief |
-| Moira Chatbot | ![Chatbot](https://mindmoor.netlify.app/moira-chatbot/moira) | AI mental health companion |
+| Mood Tracker | ![Mood Tracker](Mood.jpg) | Visualize emotional patterns over time |
+| Breathing Exercises | ![Breathing](Breathing.jpg) | Animated guides for stress relief |
+| Moira Chatbot | ![Chatbot](Moira.jpg) | AI mental health companion |
 
 ## 📖 User Guide
 
