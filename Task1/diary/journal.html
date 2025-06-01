@@ -6,51 +6,46 @@
     <title>MindMoor - Journal</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* Journal Textbox Styles */
+        /* Journal Container */
+#journal-form {
+    margin-bottom: 2rem;
+}
+
+/* Textarea Styling */
 #journal-text {
     width: 100%;
-    min-height: 200px;
-    padding: 1.5rem;
+    min-height: 150px;
+    padding: 1rem;
     border: 2px solid var(--secondary);
-    border-radius: 12px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 8px;
+    font-family: inherit;
     font-size: 1rem;
-    line-height: 1.6;
-    color: var(--dark);
-    background-color: var(--light);
     resize: vertical;
-    transition: all 0.3s ease;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transition: border-color 0.3s;
+    margin-bottom: 1rem;
 }
 
 #journal-text:focus {
-    outline: none;
     border-color: var(--primary);
+    outline: none;
     box-shadow: 0 0 0 3px rgba(93, 147, 166, 0.2);
-    background-color: white;
 }
 
-/* Journal Entries Container */
+/* Entries Container */
 #journal-entries {
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-/* Individual Journal Entry */
+/* Individual Entry */
 .journal-entry {
     background: white;
     padding: 1.5rem;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
     border-left: 4px solid var(--primary);
-    transition: transform 0.3s ease;
-}
-
-.journal-entry:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .journal-entry small {
@@ -63,27 +58,27 @@
 .journal-entry p {
     white-space: pre-wrap;
     margin: 0;
-    color: var(--text);
+    line-height: 1.6;
 }
 
-/* Placeholder Styling */
-#journal-text::placeholder {
-    color: #a6dcef;
-    opacity: 1;
-    font-style: italic;
+/* Delete Button */
+.delete-entry {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    #journal-text {
-        min-height: 150px;
-        padding: 1rem;
-    }
-    
-    .journal-entry {
-        padding: 1rem;
-    }
-    }
+.delete-entry:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+}
     </style>
 </head>
 <body>
@@ -103,14 +98,15 @@
     </header>
 
     <main>
-        <section class="journal">
-            <h1>Journal</h1>
-            <form id="journal-form">
-                <textarea id="journal-text" placeholder="Write your thoughts..."></textarea>
-                <button type="submit">Save Entry</button>
-            </form>
-            <div id="journal-entries"></div>
-        </section>
+        <!-- Journal Section -->
+<section class="journal">
+    <h2>Journal</h2>
+    <form id="journal-form">
+        <textarea id="journal-text" placeholder="Write your thoughts here..."></textarea>
+        <button type="submit">Save Entry</button>
+    </form>
+    <div id="journal-entries"></div>
+</section>
     </main>
 
     <footer>
@@ -120,6 +116,86 @@
         </div>
     </footer>
 
-    <script src="../script.js"></script>
+    <script>
+        // Journal System
+const journal = {
+    entries: JSON.parse(localStorage.getItem('journal')) || [],
+    
+    addEntry: function(text) {
+        const newEntry = {
+            id: Date.now(), // Unique ID for each entry
+            date: new Date().toISOString(),
+            text: text,
+            mood: currentMood // Optional: link to current mood if available
+        };
+        this.entries.unshift(newEntry); // Add new entry at beginning
+        localStorage.setItem('journal', JSON.stringify(this.entries));
+        this.renderEntries();
+    },
+    
+    renderEntries: function() {
+        const container = document.getElementById('journal-entries');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        this.entries.forEach(entry => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'journal-entry';
+            entryDiv.dataset.id = entry.id;
+            
+            // Format date nicely
+            const entryDate = new Date(entry.date);
+            const dateString = entryDate.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            entryDiv.innerHTML = `
+                <small>${dateString}</small>
+                <p>${entry.text.replace(/\n/g, '<br>')}</p>
+                <button class="delete-entry" data-id="${entry.id}">Delete</button>
+            `;
+            container.appendChild(entryDiv);
+        });
+        
+        // Add delete event listeners
+        document.querySelectorAll('.delete-entry').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(e.target.dataset.id);
+                this.deleteEntry(id);
+            });
+        });
+    },
+    
+    deleteEntry: function(id) {
+        this.entries = this.entries.filter(entry => entry.id !== id);
+        localStorage.setItem('journal', JSON.stringify(this.entries));
+        this.renderEntries();
+    }
+};
+
+// Initialize journal on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Journal form submission
+    const journalForm = document.getElementById('journal-form');
+    if (journalForm) {
+        journalForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const text = document.getElementById('journal-text').value.trim();
+            if (text) {
+                journal.addEntry(text);
+                document.getElementById('journal-text').value = '';
+            }
+        });
+        
+        // Load existing entries
+        journal.renderEntries();
+    }
+});
+    </script>
 </body>
 </html>
