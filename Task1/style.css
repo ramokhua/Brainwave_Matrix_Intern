@@ -105,26 +105,7 @@ nav {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
-.cta {
-    background-color: var(--accent);
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 1rem;
-    text-decoration: none;
-    display: inline-block;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.btn {
+button, .btn, .cta, .moods button, #send-message, #start-breathing, [type="submit"] {
     background: var(--primary);
     color: white;
     border: none;
@@ -132,19 +113,63 @@ nav {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     display: inline-block;
     text-align: center;
     text-decoration: none;
-    margin-top: 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 2px solid transparent;
 }
 
-.btn:hover {
+button:hover, .btn:hover, .cta:hover, .moods button:hover, 
+#send-message:hover, #start-breathing:hover, [type="submit"]:hover {
     background: white;
     color: var(--primary);
-    border: 2px solid var(--primary);
+    border-color: var(--primary);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+button:active, .btn:active, .cta:active, .moods button:active, 
+#send-message:active, #start-breathing:active, [type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.cta {
+    background: var(--accent);
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+}
+
+.moods button {
+    background: var(--secondary);
+    color: var(--dark);
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.start-exercise {
+    background: var(--accent);
+}
+
+.start-exercise:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.read-btn {
+    margin-top: 0.5rem;
+    }
+
+.cta {
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .exercise-list {
