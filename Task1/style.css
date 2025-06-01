@@ -172,6 +172,93 @@ button:active, .btn:active, .cta:active, .moods button:active,
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+#breathing-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--primary);
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 1s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#breathing-circle::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#breathing-circle.breathing-in::before {
+    opacity: 1;
+}
+
+#breathing-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    z-index: 1;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.breathing-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+#breathing-pattern {
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--primary);
+    background: white;
+    font-family: inherit;
+    min-width: 200px;
+}
+
+.breathing-instructions {
+    margin-top: 2rem;
+    text-align: left;
+    padding: 1rem;
+    background: rgba(166, 220, 239, 0.2);
+    border-radius: 10px;
+}
+
+.breathing-instructions ul {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.breathing-instructions li {
+    margin-bottom: 0.5rem;
+}
+
+/* Animation for different states */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.breathing-active {
+    animation: pulse 4s infinite ease-in-out;
+}
+
 .exercise-list {
     margin: 1rem 0;
     padding-left: 1.2rem;
