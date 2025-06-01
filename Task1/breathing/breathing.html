@@ -5,9 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindMoor - Breathing Exercises</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .breathing-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        #breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 1s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        #breathing-text {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            min-height: 2rem;
+        }
+        
+        .breathing-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            align-items: center;
+        }
+        
+        #breathing-pattern {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+            background: white;
+            font-family: inherit;
+        }
+        
+        #start-breathing {
+            min-width: 100px;
+        }
+    </style>
 </head>
 <body>
-    <header>
+      <header>
         <nav>
             <div class="logo-container">
                 <img src="../logo-transparent.png" alt="MindMoor Logo" class="logo" width="150">
@@ -15,25 +68,39 @@
                     <span class="logoname">MindMoor</span>
                     <span class="slogan">Anchor Your Thoughts, Steady Your Soul</span>
                 </div>
+            </div>
             <ul class="nav-menu">
-              <li><a href="../index.html">Back to home</a></li>
+                <li><a href="../index.html">Back to home</a></li>
             </ul>
         </nav>
-    </header>
+      </header>
 
     <main>
-        <section class="breathing">
-            <h1>Breathing Exercises</h1>
-            <div class="breathing-container">
-                <div class="circle" id="breathing-circle"></div>
-                <p id="breathing-text">Click to Start</p>
-                <div class="breathing-controls">
-                    <button id="start-breathing">Start</button>
-                    <select id="breathing-pattern">
-                        <option value="478">4-7-8 Breathing</option>
-                        <option value="box">Box Breathing</option>
-                    </select>
-                </div>
+        <section class="breathing-container">
+            <h1>Breathing Exercise</h1>
+            <p>Select a pattern and click start to begin your breathing exercise</p>
+            
+            <div id="breathing-circle">
+                <div id="breathing-text">Ready</div>
+            </div>
+            
+            <div class="breathing-controls">
+                <button id="start-breathing">Start</button>
+                <select id="breathing-pattern">
+                    <option value="478">4-7-8 Breathing</option>
+                    <option value="box">Box Breathing (4-4-4-4)</option>
+                    <option value="relax">Relaxing Breath (4-7-8)</option>
+                </select>
+            </div>
+            
+            <div class="breathing-instructions">
+                <h3>How to practice:</h3>
+                <ul>
+                    <li>Sit comfortably with your back straight</li>
+                    <li>Breathe through your nose</li>
+                    <li>Follow the animation and instructions</li>
+                    <li>Practice for 3-5 minutes</li>
+                </ul>
             </div>
         </section>
     </main>
@@ -41,7 +108,6 @@
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 MindMoor. All rights reserved.</p>
-            <p>For crisis support, please contact your local helpline.</p>
         </div>
     </footer>
 
