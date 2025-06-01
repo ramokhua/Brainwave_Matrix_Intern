@@ -1,6 +1,6 @@
 # MindMoor - Mental Wellness Platform
 
-![MindMoor Banner](https://via.placeholder.com/1200x400/5d93a6/ffffff?text=MindMoor+-+Anchor+Your+Thoughts,+Steady+Your+Soul)
+![MindMoor Banner](logo-transparent.png)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/951ddffb-b337-41b3-b453-93fe7bb0f319/deploy-status)](https://app.netlify.com/sites/mindmoor/deploys) 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
