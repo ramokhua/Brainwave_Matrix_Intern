@@ -1,2 +1,2 @@
-# Brainwave_Matrix_Intern
-A repository of my projects as a web development intern at Brainwave Matrix Solutions 
+# My personal projects
+A repository of projects that im currently working on, they are open sourced
