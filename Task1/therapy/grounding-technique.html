@@ -59,6 +59,15 @@
                         <input type="text" placeholder="Item 4">
                         <input type="text" placeholder="Item 5">
                     </div>
+
+                    <div class="grounding-controls">
+                        <button id="prev-step" disabled>Previous</button>
+                        <span class="step-counter">Step 5 of 5</span>
+                       <button id="next-step">
+                             <a href="#step-4">Next</a>
+                        </button>
+                        <button id="start-over" style="display:none;">Start Over</button>
+                    </div>
                 </div>
                 
                 <div class="grounding-step" id="step-4">
@@ -69,6 +78,17 @@
                         <input type="text" placeholder="Item 3">
                         <input type="text" placeholder="Item 4">
                     </div>
+
+                    <div class="grounding-controls">
+                        <button id="prev-step">
+                             <a href="#step-5">Previous</a>
+                        </button>
+                        <span class="step-counter">Step 5 of 5</span>
+                        <button id="next-step">
+                             <a href="#step-3">Next</a>
+                        </button>
+                        <button id="start-over" style="display:none;">Start Over</button>
+                    </div>
                 </div>
                 
                 <div class="grounding-step" id="step-3">
@@ -78,6 +98,17 @@
                         <input type="text" placeholder="Sound 2">
                         <input type="text" placeholder="Sound 3">
                     </div>
+
+                    <div class="grounding-controls">
+                        <button id="prev-step">
+                             <a href="#step-4">Previous</a>
+                        </button>
+                        <span class="step-counter">Step 5 of 5</span>
+                        <button id="next-step">
+                             <a href="#step-2">Next</a>
+                        </button>
+                        <button id="start-over" style="display:none;">Start Over</button>
+                    </div>
                 </div>
                 
                 <div class="grounding-step" id="step-2">
@@ -86,6 +117,17 @@
                         <input type="text" placeholder="Scent 1">
                         <input type="text" placeholder="Scent 2">
                     </div>
+
+                    <div class="grounding-controls">
+                        <button id="prev-step">
+                             <a href="#step-3">Previous</a>
+                        </button>
+                        <span class="step-counter">Step 5 of 5</span>
+                        <button id="next-step">
+                             <a href="#step-1">Next</a>
+                        </button>
+                        <button id="start-over" style="display:none;">Start Over</button>
+                    </div>
                 </div>
                 
                 <div class="grounding-step" id="step-1">
@@ -93,14 +135,24 @@
                     <div class="grounding-inputs">
                         <input type="text" placeholder="Taste">
                     </div>
-                    <p class="completion-message">You've completed the exercise! How do you feel now?</p>
+                    
+                    <div class="grounding-controls">
+                        <button id="prev-step">
+                            <a href="#step-2">Previous</a>
+                        </button>
+                        <span class="step-counter">Step 1 of 2</span>
+                        <button id="next-step">
+                            <a href="#completion-message">Complete</a>
+                        </button>
+                        <button id="start-over" style="display:none;">Start Over</button>
+                    </div>
                 </div>
                 
-                <div class="grounding-controls">
-                    <button id="prev-step" disabled>Previous</button>
-                    <span class="step-counter">Step 5 of 5</span>
-                    <button id="next-step">Next</button>
-                    <button id="start-over" style="display:none;">Start Over</button>
+                <div class="grounding-step" id="completion-message">
+                    <p class="completion-message">You've completed the exercise! How do you feel now?</p>
+                    <button id="next-step">
+                        <a href="../mood/mood-tracker.html">Log your mood here!</a>
+                    </button>
                 </div>
             </div>
         </div>
